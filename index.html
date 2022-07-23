@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Wa API</h1>
+    <p></p>
+    <img id="qrcode" src="" alt="qrcode" />
+    <h3>Logs:</h3>
+    <ul class="logs"></ul>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"
+    integrity="sha512-iqRVtNB+t9O+epcgUTIPF+nklypcR23H1yR1NFM9kffn6/iBhZ9bTB6oKLaGMv8JE9UgjcwfBFg/eHC/VMws+g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    $(document).ready(function () {
+      const socket = io();
+
+      socket.on("connect", () => {
+        // either with send()
+      });
+
+      socket.on("message", function (msg) {
+        $(".logs").append($("<li>").text(msg));
+      });
+
+      socket.on("qr", function (templek) {
+        $("#qrcode").attr("src", templek);
+      });
+
+      socket.on('ready', function (data) {
+        $('#qrcode').hide();
+      });
+
+      socket.on('authenticated', function (data) {
+        $('#qrcode').hide();
+      });
+
+    });
+  </script>
+</body>
+
+</html>
